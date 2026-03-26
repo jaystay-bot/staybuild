@@ -138,9 +138,27 @@ export default function Services() {
             padding: '16px 24px',
             fontSize: '14px',
             color: '#888',
+            marginBottom: '12px',
           }}
         >
           🔧 <strong style={{ color: '#f0efe8' }}>Monthly Maintenance — $75/month.</strong> Keeps your site live, updated, and handled. You focus on your business.
+        </div>
+
+        {/* Guarantee strip */}
+        <div
+          style={{
+            textAlign: 'center',
+            fontSize: '13px',
+            color: '#666',
+            padding: '12px 0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+        >
+          <span style={{ color: '#22c55e', fontWeight: 700 }}>✓</span>
+          Not happy with the first draft? I&apos;ll revise it until you are — no extra charge.
         </div>
       </div>
     </section>

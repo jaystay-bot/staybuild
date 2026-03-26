@@ -26,12 +26,12 @@ export default function Footer() {
         </div>
 
         <a
-          href="mailto:jay@staybuild.dev"
+          href="mailto:jonathanstaley17@gmail.com"
           style={{ fontSize: '14px', color: '#888', textDecoration: 'none', transition: 'color 0.15s' }}
           onMouseEnter={e => (e.currentTarget.style.color = '#f0efe8')}
           onMouseLeave={e => (e.currentTarget.style.color = '#888')}
         >
-          jay@staybuild.dev
+          jonathanstaley17@gmail.com
         </a>
 
         <div style={{ fontSize: '13px', color: '#555' }}>© 2025 Staybuild</div>

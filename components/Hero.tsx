@@ -37,7 +37,7 @@ export default function Hero() {
               animation: 'pulse 2s infinite',
             }}
           />
-          Available for new projects
+          Taking new projects this month
         </div>
 
         {/* Headline */}
@@ -65,6 +65,19 @@ export default function Hero() {
           }}
         >
           Web apps, landing pages, and PWAs — built clean, built fast. Starting at $600.
+        </p>
+
+        {/* Signature */}
+        <p
+          style={{
+            fontSize: '13px',
+            color: '#555',
+            fontStyle: 'italic',
+            marginTop: '-32px',
+            marginBottom: '48px',
+          }}
+        >
+          <span style={{ color: '#7c3aed' }}>—</span> Jay, founder of Staybuild
         </p>
 
         {/* CTA Buttons */}
