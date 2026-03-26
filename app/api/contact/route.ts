@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     }
 
     await resend.emails.send({
-      from: 'Staybuild Form <onboarding@resend.dev>',
+      from: 'Staybuild <noreply@staybuild.dev>',
       to: process.env.CONTACT_EMAIL!,
       subject: `New Project Inquiry — ${body.serviceType || 'General'} from ${body.name}`,
       html: `
