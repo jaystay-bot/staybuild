@@ -1,5 +1,7 @@
 'use client'
 
+import StaybuildLogo from '@/components/StaybuildLogo'
+
 export default function Nav() {
   return (
     <nav
@@ -23,8 +25,8 @@ export default function Nav() {
           justifyContent: 'space-between',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#7c3aed', display: 'inline-block' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+          <StaybuildLogo size={28} />
           <span style={{ fontWeight: 700, fontSize: '18px', color: '#f0efe8', letterSpacing: '-0.02em' }}>
             Staybuild
           </span>

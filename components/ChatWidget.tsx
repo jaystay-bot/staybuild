@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import StaybuildLogo from '@/components/StaybuildLogo'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -158,26 +159,22 @@ export default function ChatWidget() {
               position: 'relative',
             }}
           >
-            {/* Avatar — "J" initial with gradient */}
+            {/* Avatar — Staybuild crystal logo */}
             <div
               style={{
                 width: '38px',
                 height: '38px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
-                boxShadow: '0 0 16px rgba(124,58,237,0.5)',
+                background: 'rgba(124,58,237,0.12)',
+                boxShadow: '0 0 16px rgba(124,58,237,0.35)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
-                fontWeight: 800,
-                fontSize: '16px',
-                color: '#fff',
-                letterSpacing: '-0.02em',
                 position: 'relative',
               }}
             >
-              J
+              <StaybuildLogo size={24} />
               {/* Glowing online dot */}
               <span
                 style={{
