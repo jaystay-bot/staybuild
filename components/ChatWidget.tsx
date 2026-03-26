@@ -32,7 +32,7 @@ function incrementUsage(): void {
 
 const INITIAL_MESSAGE: Message = {
   role: 'assistant',
-  content: "Hi! I'm the Staybuild assistant. Ask me anything about pricing, timelines, or what we can build for you! 👋",
+  content: "Hey 👋 I'm Jay's assistant. What are you looking to build?",
 }
 
 export default function ChatWidget() {
@@ -44,17 +44,14 @@ export default function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
-  // Focus input when chat opens
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 50)
-      const count = getUsageCount()
-      if (count >= DAILY_LIMIT) setRateLimited(true)
+      if (getUsageCount() >= DAILY_LIMIT) setRateLimited(true)
     }
   }, [open])
 
@@ -89,8 +86,7 @@ export default function ChatWidget() {
           ...prev,
           {
             role: 'assistant',
-            content:
-              "You've hit the daily message limit. Come back tomorrow — or just fill out the intake form and Jay will get back to you directly!",
+            content: "You've hit the daily message limit. Come back tomorrow — or fill out the intake form and Jay will get back to you directly!",
           },
         ])
       } else if (data.success && data.reply) {
@@ -101,8 +97,7 @@ export default function ChatWidget() {
           ...prev,
           {
             role: 'assistant',
-            content:
-              "Something went wrong on my end. Head to the intake form below and Jay will get back to you within 24 hours!",
+            content: "Something went wrong on my end. Head to the intake form below and Jay will get back to you within 24 hours!",
           },
         ])
       }
@@ -111,8 +106,7 @@ export default function ChatWidget() {
         ...prev,
         {
           role: 'assistant',
-          content:
-            "Something went wrong. Try the intake form below to reach Jay directly!",
+          content: "Something went wrong. Try the intake form below to reach Jay directly!",
         },
       ])
     } finally {
@@ -140,55 +134,89 @@ export default function ChatWidget() {
             right: '24px',
             width: 'min(380px, calc(100vw - 32px))',
             height: 'min(520px, calc(100svh - 120px))',
-            background: '#13151a',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: '16px',
-            boxShadow: '0 24px 64px rgba(0,0,0,0.65), 0 0 0 1px rgba(124,58,237,0.12)',
+            background: '#0f1117',
+            border: '1px solid rgba(124,58,237,0.2)',
+            borderRadius: '20px',
+            boxShadow: '0 28px 72px rgba(0,0,0,0.7), 0 0 0 1px rgba(124,58,237,0.1), 0 0 40px rgba(124,58,237,0.06)',
             display: 'flex',
             flexDirection: 'column',
             zIndex: 9999,
             overflow: 'hidden',
-            animation: 'chatSlideUp 0.18s ease-out',
+            animation: 'chatSlideUp 0.2s cubic-bezier(0.16,1,0.3,1)',
           }}
         >
-          {/* Header */}
+          {/* ── Header ── */}
           <div
             style={{
-              padding: '14px 16px',
-              borderBottom: '1px solid rgba(255,255,255,0.08)',
+              padding: '16px 18px',
+              borderBottom: '1px solid rgba(255,255,255,0.07)',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              background: 'rgba(124,58,237,0.07)',
+              gap: '12px',
+              background: 'linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(79,70,229,0.08) 100%)',
               flexShrink: 0,
+              position: 'relative',
             }}
           >
-            {/* Bot avatar */}
+            {/* Avatar — "J" initial with gradient */}
             <div
               style={{
-                width: '34px',
-                height: '34px',
+                width: '38px',
+                height: '38px',
                 borderRadius: '50%',
-                background: 'rgba(124,58,237,0.2)',
-                border: '1px solid rgba(124,58,237,0.45)',
+                background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+                boxShadow: '0 0 16px rgba(124,58,237,0.5)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
+                fontWeight: 800,
+                fontSize: '16px',
+                color: '#fff',
+                letterSpacing: '-0.02em',
+                position: 'relative',
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
+              J
+              {/* Glowing online dot */}
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '1px',
+                  right: '1px',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  background: '#a78bfa',
+                  border: '2px solid #0f1117',
+                  boxShadow: '0 0 6px rgba(167,139,250,0.8)',
+                  animation: 'onlinePulse 2.5s ease-in-out infinite',
+                }}
+              />
             </div>
+
+            {/* Name + status */}
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '14px', fontWeight: 600, color: '#f0efe8', lineHeight: 1.2 }}>
-                Staybuild Assistant
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#f0efe8', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
+                Jay
               </div>
-              <div style={{ fontSize: '11px', color: '#555', marginTop: '2px' }}>
-                Powered by Claude
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '3px' }}>
+                <span
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: '#a78bfa',
+                    boxShadow: '0 0 6px rgba(167,139,250,0.9)',
+                    display: 'inline-block',
+                    animation: 'onlinePulse 2.5s ease-in-out infinite',
+                  }}
+                />
+                <span style={{ fontSize: '11px', color: '#6d6a80' }}>Online now</span>
               </div>
             </div>
+
+            {/* Close */}
             <button
               onClick={() => setOpen(false)}
               aria-label="Close chat"
@@ -196,12 +224,12 @@ export default function ChatWidget() {
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                color: '#555',
+                color: '#4a4762',
                 padding: '6px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 transition: 'color 0.15s, background 0.15s',
               }}
               onMouseEnter={e => {
@@ -209,7 +237,7 @@ export default function ChatWidget() {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.color = '#555'
+                e.currentTarget.style.color = '#4a4762'
                 e.currentTarget.style.background = 'none'
               }}
             >
@@ -220,7 +248,7 @@ export default function ChatWidget() {
             </button>
           </div>
 
-          {/* Messages */}
+          {/* ── Messages ── */}
           <div
             style={{
               flex: 1,
@@ -237,6 +265,7 @@ export default function ChatWidget() {
                 style={{
                   display: 'flex',
                   justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                  animation: 'msgFadeIn 0.18s ease-out',
                 }}
               >
                 <div
@@ -248,16 +277,20 @@ export default function ChatWidget() {
                         ? '14px 14px 3px 14px'
                         : '14px 14px 14px 3px',
                     fontSize: '13.5px',
-                    lineHeight: 1.55,
+                    lineHeight: 1.58,
                     background:
                       msg.role === 'user'
-                        ? '#7c3aed'
-                        : 'rgba(255,255,255,0.06)',
-                    color: msg.role === 'user' ? '#fff' : '#cccbc4',
+                        ? 'linear-gradient(135deg, #7c3aed, #4f46e5)'
+                        : 'rgba(255,255,255,0.05)',
+                    color: msg.role === 'user' ? '#fff' : '#c8c7c0',
                     border:
                       msg.role === 'user'
                         ? 'none'
                         : '1px solid rgba(255,255,255,0.08)',
+                    boxShadow:
+                      msg.role === 'user'
+                        ? '0 2px 12px rgba(124,58,237,0.3)'
+                        : 'none',
                   }}
                 >
                   {msg.content}
@@ -267,12 +300,12 @@ export default function ChatWidget() {
 
             {/* Typing indicator */}
             {loading && (
-              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-start', animation: 'msgFadeIn 0.18s ease-out' }}>
                 <div
                   style={{
                     padding: '12px 16px',
                     borderRadius: '14px 14px 14px 3px',
-                    background: 'rgba(255,255,255,0.06)',
+                    background: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.08)',
                     display: 'flex',
                     gap: '5px',
@@ -286,7 +319,7 @@ export default function ChatWidget() {
                         width: '6px',
                         height: '6px',
                         borderRadius: '50%',
-                        background: '#7c3aed',
+                        background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
                         display: 'inline-block',
                         animation: 'typingDot 1.2s infinite ease-in-out',
                         animationDelay: `${i * 0.18}s`,
@@ -299,15 +332,15 @@ export default function ChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input area */}
+          {/* ── Input area ── */}
           <div
             style={{
-              padding: '10px 12px',
-              borderTop: '1px solid rgba(255,255,255,0.08)',
+              padding: '12px 14px',
+              borderTop: '1px solid rgba(255,255,255,0.07)',
               display: 'flex',
               gap: '8px',
               alignItems: 'center',
-              background: 'rgba(0,0,0,0.25)',
+              background: 'rgba(0,0,0,0.3)',
               flexShrink: 0,
             }}
           >
@@ -322,18 +355,24 @@ export default function ChatWidget() {
               style={{
                 flex: 1,
                 background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '8px',
-                padding: '9px 12px',
+                border: '1px solid rgba(255,255,255,0.09)',
+                borderRadius: '10px',
+                padding: '9px 13px',
                 fontSize: '13.5px',
                 color: '#f0efe8',
                 outline: 'none',
                 fontFamily: 'inherit',
-                transition: 'border-color 0.15s',
+                transition: 'border-color 0.15s, box-shadow 0.15s',
                 opacity: rateLimited ? 0.45 : 1,
               }}
-              onFocus={e => { e.currentTarget.style.borderColor = 'rgba(124,58,237,0.5)' }}
-              onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}
+              onFocus={e => {
+                e.currentTarget.style.borderColor = 'rgba(124,58,237,0.5)'
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.08)'
+              }}
+              onBlur={e => {
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
             />
             <button
               onClick={sendMessage}
@@ -342,18 +381,29 @@ export default function ChatWidget() {
               style={{
                 width: '36px',
                 height: '36px',
-                borderRadius: '8px',
-                background: canSend ? '#7c3aed' : 'rgba(124,58,237,0.25)',
+                borderRadius: '10px',
+                background: canSend
+                  ? 'linear-gradient(135deg, #7c3aed, #4f46e5)'
+                  : 'rgba(124,58,237,0.2)',
                 border: 'none',
                 cursor: canSend ? 'pointer' : 'not-allowed',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
-                transition: 'background 0.15s, transform 0.1s',
+                transition: 'opacity 0.15s, transform 0.1s, box-shadow 0.15s',
+                boxShadow: canSend ? '0 2px 10px rgba(124,58,237,0.35)' : 'none',
               }}
-              onMouseEnter={e => { if (canSend) e.currentTarget.style.transform = 'scale(1.08)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
+              onMouseEnter={e => {
+                if (canSend) {
+                  e.currentTarget.style.transform = 'scale(1.08)'
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(124,58,237,0.5)'
+                }
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1)'
+                e.currentTarget.style.boxShadow = canSend ? '0 2px 10px rgba(124,58,237,0.35)' : 'none'
+              }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13" />
@@ -364,63 +414,100 @@ export default function ChatWidget() {
         </div>
       )}
 
-      {/* ── Floating bubble ────────────────────────────────────── */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-label={open ? 'Close chat' : 'Chat with Staybuild assistant'}
+      {/* ── Floating bubble + pulse ring ───────────────────────── */}
+      <div
         style={{
           position: 'fixed',
           bottom: '24px',
           right: '24px',
+          zIndex: 10000,
           width: '56px',
           height: '56px',
-          borderRadius: '50%',
-          background: '#7c3aed',
-          border: 'none',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(124,58,237,0.5)',
-          zIndex: 10000,
-          transition: 'transform 0.2s, box-shadow 0.2s',
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.transform = 'scale(1.1)'
-          e.currentTarget.style.boxShadow = '0 6px 28px rgba(124,58,237,0.65)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.transform = 'scale(1)'
-          e.currentTarget.style.boxShadow = '0 4px 20px rgba(124,58,237,0.5)'
         }}
       >
-        {open ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        ) : (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-        )}
-
-        {/* Green online dot — only when closed */}
+        {/* Outer pulse ring — only when closed */}
         {!open && (
           <span
             style={{
               position: 'absolute',
-              top: '3px',
-              right: '3px',
-              width: '11px',
-              height: '11px',
+              inset: '-6px',
               borderRadius: '50%',
-              background: '#22c55e',
-              border: '2px solid #0d0f12',
+              border: '2px solid rgba(124,58,237,0.45)',
+              animation: 'bubblePulse 2.8s ease-out infinite',
+              pointerEvents: 'none',
             }}
           />
         )}
-      </button>
+        {/* Second ring — offset phase */}
+        {!open && (
+          <span
+            style={{
+              position: 'absolute',
+              inset: '-6px',
+              borderRadius: '50%',
+              border: '2px solid rgba(79,70,229,0.3)',
+              animation: 'bubblePulse 2.8s ease-out infinite',
+              animationDelay: '1.4s',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+
+        <button
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? 'Close chat' : 'Chat with Jay'}
+          style={{
+            width: '56px',
+            height: '56px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 22px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)',
+            transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s',
+            position: 'relative',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'scale(1.1)'
+            e.currentTarget.style.boxShadow = '0 6px 30px rgba(124,58,237,0.7), 0 0 0 1px rgba(124,58,237,0.4)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = 'scale(1)'
+            e.currentTarget.style.boxShadow = '0 4px 22px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)'
+          }}
+        >
+          {open ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          )}
+
+          {/* Green availability dot */}
+          {!open && (
+            <span
+              style={{
+                position: 'absolute',
+                top: '2px',
+                right: '2px',
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: '#22c55e',
+                border: '2px solid #0d0f12',
+                boxShadow: '0 0 6px rgba(34,197,94,0.6)',
+              }}
+            />
+          )}
+        </button>
+      </div>
 
       <style>{`
         @keyframes typingDot {
@@ -428,8 +515,21 @@ export default function ChatWidget() {
           30% { opacity: 1; transform: translateY(-3px); }
         }
         @keyframes chatSlideUp {
-          from { opacity: 0; transform: translateY(12px) scale(0.97); }
+          from { opacity: 0; transform: translateY(14px) scale(0.96); }
           to   { opacity: 1; transform: translateY(0)   scale(1); }
+        }
+        @keyframes bubblePulse {
+          0%   { transform: scale(1);    opacity: 0.7; }
+          70%  { transform: scale(1.55); opacity: 0; }
+          100% { transform: scale(1.55); opacity: 0; }
+        }
+        @keyframes onlinePulse {
+          0%, 100% { opacity: 1; }
+          50%      { opacity: 0.45; }
+        }
+        @keyframes msgFadeIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </>
