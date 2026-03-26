@@ -418,8 +418,8 @@ export default function ChatWidget() {
           bottom: '24px',
           right: '24px',
           zIndex: 10000,
-          width: '56px',
-          height: '56px',
+          width: '52px',
+          height: '52px',
         }}
       >
         {/* Outer pulse ring — only when closed */}
@@ -454,36 +454,26 @@ export default function ChatWidget() {
           onClick={() => setOpen(o => !o)}
           aria-label={open ? 'Close chat' : 'Chat with Jay'}
           style={{
-            width: '56px',
-            height: '56px',
+            width: '52px',
+            height: '52px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+            background: 'none',
             border: 'none',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 22px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)',
-            transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s',
+            transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1), opacity 0.15s',
             position: 'relative',
           }}
           onMouseEnter={e => {
             e.currentTarget.style.transform = 'scale(1.1)'
-            e.currentTarget.style.boxShadow = '0 6px 30px rgba(124,58,237,0.7), 0 0 0 1px rgba(124,58,237,0.4)'
           }}
           onMouseLeave={e => {
             e.currentTarget.style.transform = 'scale(1)'
-            e.currentTarget.style.boxShadow = '0 4px 22px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)'
           }}
         >
-          {open ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          ) : (
-            <StaybuildLogo size={28} />
-          )}
+          <StaybuildLogo size={52} />
 
           {/* Green availability dot */}
           {!open && (
