@@ -27,6 +27,7 @@ const faqs = [
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
+  const [hovered, setHovered] = useState<number | null>(null)
 
   return (
     <section id="faq" style={{ padding: '80px 24px' }}>
@@ -49,18 +50,25 @@ export default function FAQ() {
               key={i}
               style={{
                 background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                border: '1px solid',
+                borderColor: open === i
+                  ? 'rgba(124,58,237,0.45)'
+                  : hovered === i
+                  ? 'rgba(255,255,255,0.14)'
+                  : 'rgba(255,255,255,0.08)',
                 borderRadius: '12px',
                 overflow: 'hidden',
-                transition: 'border-color 0.2s',
-                borderColor: open === i ? 'rgba(124,58,237,0.3)' : 'rgba(255,255,255,0.08)',
+                transition: 'border-color 0.2s, box-shadow 0.2s',
+                boxShadow: open === i ? '0 0 0 1px rgba(124,58,237,0.08), 0 4px 20px rgba(0,0,0,0.2)' : 'none',
               }}
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
                 style={{
                   width: '100%',
-                  background: 'none',
+                  background: hovered === i && open !== i ? 'rgba(255,255,255,0.025)' : 'none',
                   border: 'none',
                   cursor: 'pointer',
                   padding: '20px 24px',
@@ -69,6 +77,7 @@ export default function FAQ() {
                   alignItems: 'center',
                   gap: '16px',
                   textAlign: 'left',
+                  transition: 'background 0.15s',
                 }}
               >
                 <span
@@ -85,9 +94,9 @@ export default function FAQ() {
                 <span
                   style={{
                     fontSize: '18px',
-                    color: '#555',
+                    color: open === i ? '#7c3aed' : '#555',
                     flexShrink: 0,
-                    transition: 'transform 0.2s',
+                    transition: 'transform 0.2s, color 0.15s',
                     transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)',
                     display: 'inline-block',
                   }}

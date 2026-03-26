@@ -19,7 +19,7 @@ export default function AboutJay() {
         <div
           style={{
             display: 'flex',
-            gap: '32px',
+            gap: '40px',
             alignItems: 'flex-start',
             flexWrap: 'wrap',
           }}
@@ -50,7 +50,7 @@ export default function AboutJay() {
             <p
               style={{
                 fontSize: '15px',
-                color: '#888',
+                color: '#999',
                 lineHeight: 1.75,
                 marginBottom: '20px',
               }}

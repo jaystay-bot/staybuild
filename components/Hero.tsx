@@ -12,19 +12,20 @@ export default function Hero() {
       }}
     >
       <div style={{ maxWidth: '640px', width: '100%', textAlign: 'center' }}>
-        {/* Available badge */}
+
+        {/* Availability badge — more defined, less frosted */}
         <div
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            backgroundColor: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.1)',
+            backgroundColor: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.16)',
             borderRadius: '100px',
             padding: '6px 16px',
             marginBottom: '40px',
             fontSize: '13px',
-            color: '#999',
+            color: '#bbb',
           }}
         >
           <span
@@ -47,7 +48,7 @@ export default function Hero() {
             fontWeight: 800,
             letterSpacing: '-0.03em',
             lineHeight: 1.05,
-            color: '#f0efe8',
+            color: '#f5f4ee',
             marginBottom: '24px',
           }}
         >
@@ -103,11 +104,19 @@ export default function Hero() {
               minHeight: '48px',
               display: 'inline-flex',
               alignItems: 'center',
-              boxShadow: '0 0 24px rgba(124,58,237,0.35)',
-              transition: 'opacity 0.15s, box-shadow 0.15s',
+              boxShadow: '0 0 18px rgba(124,58,237,0.28)',
+              transition: 'opacity 0.15s, box-shadow 0.15s, transform 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.boxShadow = '0 0 32px rgba(124,58,237,0.5)' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.boxShadow = '0 0 24px rgba(124,58,237,0.35)' }}
+            onMouseEnter={e => {
+              e.currentTarget.style.opacity = '0.92'
+              e.currentTarget.style.boxShadow = '0 0 24px rgba(124,58,237,0.42)'
+              e.currentTarget.style.transform = 'translateY(-1px)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.opacity = '1'
+              e.currentTarget.style.boxShadow = '0 0 18px rgba(124,58,237,0.28)'
+              e.currentTarget.style.transform = 'translateY(0)'
+            }}
           >
             Start a Project →
           </a>
@@ -134,12 +143,12 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Trust stats */}
+        {/* Trust stats — numbers dominate, labels support */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '24px',
+            gap: '32px',
             borderTop: '1px solid rgba(255,255,255,0.08)',
             paddingTop: '40px',
           }}
@@ -150,10 +159,10 @@ export default function Hero() {
             { value: '5+', label: 'Live products built' },
           ].map((stat) => (
             <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '32px', fontWeight: 800, color: '#f0efe8', letterSpacing: '-0.03em' }}>
+              <div style={{ fontSize: '34px', fontWeight: 800, color: '#f5f4ee', letterSpacing: '-0.03em' }}>
                 {stat.value}
               </div>
-              <div style={{ fontSize: '12px', color: '#666', marginTop: '6px', letterSpacing: '0.02em' }}>
+              <div style={{ fontSize: '12px', color: '#555', marginTop: '6px', letterSpacing: '0.02em' }}>
                 {stat.label}
               </div>
             </div>

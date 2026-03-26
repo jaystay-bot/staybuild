@@ -14,7 +14,7 @@ const inputStyle: React.CSSProperties = {
   color: '#f0efe8',
   outline: 'none',
   fontFamily: 'inherit',
-  transition: 'border-color 0.15s, box-shadow 0.15s',
+  transition: 'border-color 0.15s, box-shadow 0.15s, background-color 0.15s',
 }
 
 const labelStyle: React.CSSProperties = {
@@ -24,6 +24,17 @@ const labelStyle: React.CSSProperties = {
   color: '#b0afa8',
   marginBottom: '8px',
   letterSpacing: '0.01em',
+}
+
+function onInputFocus(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  e.currentTarget.style.borderColor = 'rgba(124,58,237,0.7)'
+  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.1)'
+  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.07)'
+}
+function onInputBlur(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
+  e.currentTarget.style.boxShadow = 'none'
+  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)'
 }
 
 // ── Custom Select ────────────────────────────────────────────
@@ -59,7 +70,6 @@ function CustomSelect({
 
   return (
     <div ref={ref} style={{ position: 'relative', width: '100%' }}>
-      {/* Hidden native input for required validation */}
       {required && (
         <input
           type="text"
@@ -81,10 +91,11 @@ function CustomSelect({
           alignItems: 'center',
           justifyContent: 'space-between',
           cursor: 'pointer',
-          color: selected ? '#f0efe8' : 'rgba(240,239,232,0.28)',
+          color: selected ? '#f0efe8' : 'rgba(240,239,232,0.25)',
           textAlign: 'left',
-          borderColor: open ? 'rgba(124,58,237,0.65)' : 'rgba(255,255,255,0.12)',
-          boxShadow: open ? '0 0 0 3px rgba(124,58,237,0.12)' : 'none',
+          borderColor: open ? 'rgba(124,58,237,0.7)' : 'rgba(255,255,255,0.12)',
+          boxShadow: open ? '0 0 0 3px rgba(124,58,237,0.1)' : 'none',
+          backgroundColor: open ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.05)',
         }}
       >
         <span>{selected ? selected.label : 'Select one...'}</span>
@@ -236,15 +247,23 @@ export default function IntakeForm() {
         background: 'radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.07) 0%, transparent 65%)',
       }}
     >
+      {/* Placeholder styling */}
+      <style>{`
+        #intake input::placeholder,
+        #intake textarea::placeholder {
+          color: rgba(240,239,232,0.22);
+        }
+      `}</style>
+
       <div
         style={{
           maxWidth: '640px',
           margin: '0 auto',
-          background: 'rgba(255,255,255,0.025)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.11)',
           borderRadius: '16px',
           padding: '40px 36px',
-          boxShadow: '0 8px 48px rgba(0,0,0,0.45)',
+          boxShadow: '0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(124,58,237,0.1)',
         }}
       >
         <h2
@@ -262,7 +281,7 @@ export default function IntakeForm() {
           Tell me what you need. I&apos;ll get back to you within 24 hours.
         </p>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
           {/* 1. Business/idea */}
           <div>
             <label style={labelStyle}>What&apos;s your business or idea? *</label>
@@ -272,6 +291,8 @@ export default function IntakeForm() {
               rows={4}
               value={form.idea}
               onChange={handleChange}
+              onFocus={onInputFocus}
+              onBlur={onInputBlur}
               style={{ ...inputStyle, resize: 'vertical' }}
               placeholder="Describe what you do and what you want built..."
             />
@@ -337,6 +358,8 @@ export default function IntakeForm() {
               name="inspiration"
               value={form.inspiration}
               onChange={handleChange}
+              onFocus={onInputFocus}
+              onBlur={onInputBlur}
               style={inputStyle}
               placeholder="e.g. linear.app, stripe.com"
             />
@@ -384,6 +407,8 @@ export default function IntakeForm() {
               required
               value={form.name}
               onChange={handleChange}
+              onFocus={onInputFocus}
+              onBlur={onInputBlur}
               style={inputStyle}
               placeholder="Jay Smith"
             />
@@ -398,6 +423,8 @@ export default function IntakeForm() {
               required
               value={form.email}
               onChange={handleChange}
+              onFocus={onInputFocus}
+              onBlur={onInputBlur}
               style={inputStyle}
               placeholder="you@example.com"
             />
@@ -413,6 +440,8 @@ export default function IntakeForm() {
               name="phone"
               value={form.phone}
               onChange={handleChange}
+              onFocus={onInputFocus}
+              onBlur={onInputBlur}
               style={inputStyle}
               placeholder="(555) 000-0000"
             />
@@ -434,28 +463,30 @@ export default function IntakeForm() {
               width: '100%',
               backgroundColor: formState === 'loading' ? 'rgba(124,58,237,0.5)' : '#7c3aed',
               color: '#fff',
-              padding: '15px',
+              padding: '16px',
               borderRadius: '8px',
               fontWeight: 600,
               fontSize: '16px',
               border: 'none',
-              minHeight: '52px',
+              minHeight: '56px',
               cursor: formState === 'loading' ? 'not-allowed' : 'pointer',
-              boxShadow: formState === 'loading' ? 'none' : '0 0 24px rgba(124,58,237,0.35)',
-              transition: 'opacity 0.15s, box-shadow 0.15s',
+              boxShadow: formState === 'loading' ? 'none' : '0 0 18px rgba(124,58,237,0.3)',
+              transition: 'opacity 0.15s, box-shadow 0.15s, transform 0.15s',
               fontFamily: 'inherit',
             }}
             onMouseEnter={e => {
               if (formState !== 'loading') {
                 const b = e.currentTarget as HTMLButtonElement
-                b.style.opacity = '0.9'
-                b.style.boxShadow = '0 0 32px rgba(124,58,237,0.5)'
+                b.style.opacity = '0.92'
+                b.style.boxShadow = '0 0 24px rgba(124,58,237,0.45)'
+                b.style.transform = 'scale(1.01)'
               }
             }}
             onMouseLeave={e => {
               const b = e.currentTarget as HTMLButtonElement
               b.style.opacity = '1'
-              b.style.boxShadow = '0 0 24px rgba(124,58,237,0.35)'
+              b.style.boxShadow = '0 0 18px rgba(124,58,237,0.3)'
+              b.style.transform = 'scale(1)'
             }}
           >
             {formState === 'loading' ? 'Sending...' : 'Send My Project Details →'}
