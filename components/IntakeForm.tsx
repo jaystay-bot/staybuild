@@ -201,13 +201,27 @@ export default function IntakeForm() {
     setFormState('loading')
 
     try {
-      const res = await fetch('/api/contact', {
+      const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID
+      if (!formspreeId) throw new Error('Formspree form ID not configured')
+
+      const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          idea: form.idea,
+          serviceType: form.serviceType,
+          needsAuth: form.needsAuth,
+          hasBranding: form.hasBranding,
+          inspiration: form.inspiration,
+          timeline: form.timeline,
+          budget: form.budget,
+          _subject: `New Project Inquiry — ${form.serviceType || 'General'} from ${form.name}`,
+        }),
       })
-      const data = await res.json()
-      if (data.success) {
+      if (res.ok) {
         setFormState('success')
       } else {
         setFormState('error')
