@@ -201,10 +201,7 @@ export default function IntakeForm() {
     setFormState('loading')
 
     try {
-      const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID
-      if (!formspreeId) throw new Error('Formspree form ID not configured')
-
-      const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
+      const res = await fetch('https://formspree.io/f/mreopwbz', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
@@ -464,8 +461,8 @@ export default function IntakeForm() {
           {formState === 'error' && (
             <p style={{ fontSize: '14px', color: '#f87171' }}>
               Something went wrong. Email me directly at{' '}
-              <a href="mailto:jay@staybuild.dev" style={{ color: '#f87171' }}>
-                jay@staybuild.dev
+              <a href="mailto:jonathonstaley17@gmail.com" style={{ color: '#f87171' }}>
+                jonathonstaley17@gmail.com
               </a>
             </p>
           )}
