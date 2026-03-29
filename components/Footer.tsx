@@ -34,7 +34,7 @@ export default function Footer() {
           jonathanstaley17@gmail.com
         </a>
 
-        <div style={{ fontSize: '13px', color: '#555' }}>© 2025 Staybuild</div>
+        <div style={{ fontSize: '13px', color: '#555' }}>© 2026 Staybuild</div>
       </div>
     </footer>
   )
